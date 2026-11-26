@@ -12,6 +12,8 @@ public static class Simulacao
         Console.WriteLine($"{Config.TotalClientes} clientes, {Config.CadeirasEspera} cadeiras de espera, 1 barbeiro\n");
 
         using var prazo = new CancellationTokenSource(TimeSpan.FromSeconds(Config.PrazoSegundos));
+        using Process processo = Process.GetCurrentProcess();
+        TimeSpan cpuInicial = processo.TotalProcessorTime;
         var cronometro = Stopwatch.StartNew();
         Logger.Iniciar();
 
@@ -22,6 +24,9 @@ public static class Simulacao
         Task.WaitAll(tarefas.ToArray());
         cronometro.Stop();
 
-        Relatorio.Imprimir(barbearia, cronometro.Elapsed, prazo.IsCancellationRequested);
+        processo.Refresh();
+        TimeSpan cpuGasta = processo.TotalProcessorTime - cpuInicial;
+
+        Relatorio.Imprimir(barbearia, cronometro.Elapsed, cpuGasta, prazo.IsCancellationRequested);
     }
 }
