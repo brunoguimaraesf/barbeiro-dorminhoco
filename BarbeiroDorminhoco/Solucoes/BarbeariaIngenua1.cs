@@ -25,7 +25,8 @@ public sealed class BarbeariaIngenua1 : IBarbearia
         if (_cadeirasDeEspera.Count < Config.CadeirasEspera)
         {
             // Janela do erro: entre ler e gravar, outros clientes também passam pelo "if".
-            Thread.Sleep(Config.JanelaErroMs);
+            // O tempo varia um pouco por cliente para os Enqueue não caírem no mesmo instante exato.
+            Thread.Sleep(Random.Shared.Next(Config.JanelaErroMs / 2, Config.JanelaErroMs + 1));
 
             // GRAVAR: senta. Quando chega aqui, a informação lida acima já pode estar vencida.
             _cadeirasDeEspera.Enqueue(cliente);
@@ -84,7 +85,13 @@ public sealed class BarbeariaIngenua1 : IBarbearia
                 continue;
             }
 
-            Cliente cliente = _cadeirasDeEspera.Dequeue();
+            // Queue não é thread-safe: se dois Enqueue coincidirem, um cliente pode se perder.
+            if (!_cadeirasDeEspera.TryDequeue(out Cliente? cliente))
+            {
+                Logger.Log(Barbeiro.Nome, "⚠ fila inconsistente (Queue sem proteção), tentando de novo", ConsoleColor.Red);
+                Thread.Sleep(Config.PollMs);
+                continue;
+            }
             Logger.Log(Barbeiro.Nome,
                 $"chamou {cliente.Nome} (restam {_cadeirasDeEspera.Count} esperando)");
             return cliente;
