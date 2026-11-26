@@ -11,6 +11,9 @@ public sealed class Cliente
     // Campo comum, sem volatile/lock: faz parte da versão ingênua (ver BarbeariaIngenua1).
     public bool Atendido;
 
+    // Sinal "meu corte terminou", usado pelas Ingênuas 2 e 3 para o cliente esperar sem girar em laço.
+    public readonly ManualResetEventSlim CorteTerminado = new(false);
+
     public Task Iniciar(IBarbearia barbearia, CancellationToken ct) =>
         // LongRunning = thread dedicada; evita que o pool de threads atrase as chegadas.
         Task.Factory.StartNew(() => Executar(barbearia, ct), ct,
@@ -20,7 +23,10 @@ public sealed class Cliente
     {
         try
         {
-            Thread.Sleep(Random.Shared.Next(Config.ChegadaMinMs, Config.ChegadaMaxMs + 1));
+            bool retardatario = Id > Config.ClientesNaRajada;
+            Thread.Sleep(retardatario
+                ? Random.Shared.Next(Config.ChegadaTardiaMinMs, Config.ChegadaTardiaMaxMs + 1)
+                : Random.Shared.Next(Config.ChegadaMinMs, Config.ChegadaMaxMs + 1));
             Logger.Log(Nome, "chegou na barbearia");
 
             if (barbearia.Entrar(this))
