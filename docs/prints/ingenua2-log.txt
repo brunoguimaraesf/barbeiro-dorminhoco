@@ -1,0 +1,69 @@
+=== INGÊNUA 2 (lock + flag de sono: lost wakeup) ===
+20 clientes, 3 cadeiras de espera, 1 barbeiro
+
+[00:00.002] Barbeiro   · a fila estava vazia, vou dormir...  (T5)
+[00:00.047] Cliente 04 · chegou na barbearia  (T9)
+[00:00.047] Cliente 02 · chegou na barbearia  (T7)
+[00:00.047] Cliente 02 · sentou na cadeira de espera (1/3)  (T7)
+[00:00.047] Cliente 02 · barbeiro não está dormindo, não precisa acordar ninguém  (T7)
+[00:00.047] Cliente 04 · sentou na cadeira de espera (2/3)  (T9)
+[00:00.047] Cliente 04 · barbeiro não está dormindo, não precisa acordar ninguém  (T9)
+[00:00.124] Cliente 01 · chegou na barbearia  (T6)
+[00:00.124] Cliente 01 · sentou na cadeira de espera (3/3)  (T6)
+[00:00.124] Cliente 01 · barbeiro não está dormindo, não precisa acordar ninguém  (T6)
+[00:00.165] Cliente 05 · chegou na barbearia  (T10)
+[00:00.165] Cliente 05 · barbearia cheia (3/3), foi embora  (T10)
+[00:00.252] Cliente 07 · chegou na barbearia  (T12)
+[00:00.252] Cliente 07 · barbearia cheia (3/3), foi embora  (T12)
+[00:00.338] Cliente 15 · chegou na barbearia  (T20)
+[00:00.338] Cliente 15 · barbearia cheia (3/3), foi embora  (T20)
+[00:00.574] Cliente 06 · chegou na barbearia  (T11)
+[00:00.574] Cliente 06 · barbearia cheia (3/3), foi embora  (T11)
+[00:00.608] Cliente 13 · chegou na barbearia  (T18)
+[00:00.608] Cliente 13 · barbearia cheia (3/3), foi embora  (T18)
+[00:00.640] Cliente 14 · chegou na barbearia  (T19)
+[00:00.640] Cliente 14 · barbearia cheia (3/3), foi embora  (T19)
+[00:00.787] Cliente 03 · chegou na barbearia  (T8)
+[00:00.787] Cliente 03 · barbearia cheia (3/3), foi embora  (T8)
+[00:00.806] Barbeiro   · foi dormir com 3 cliente(s) esperando ⚠ LOST WAKEUP: o aviso já passou e ninguém vai acordá-lo!  (T5)
+[00:00.807] Cliente 09 · chegou na barbearia  (T14)
+[00:00.807] Cliente 09 · barbearia cheia (3/3), foi embora  (T14)
+[00:00.975] Cliente 11 · chegou na barbearia  (T16)
+[00:00.975] Cliente 11 · barbearia cheia (3/3), foi embora  (T16)
+[00:00.982] Cliente 12 · chegou na barbearia  (T17)
+[00:00.982] Cliente 12 · barbearia cheia (3/3), foi embora  (T17)
+[00:01.092] Cliente 10 · chegou na barbearia  (T15)
+[00:01.092] Cliente 10 · barbearia cheia (3/3), foi embora  (T15)
+[00:01.184] Cliente 08 · chegou na barbearia  (T13)
+[00:01.184] Cliente 08 · barbearia cheia (3/3), foi embora  (T13)
+[00:03.955] Cliente 17 · chegou na barbearia  (T22)
+[00:03.955] Cliente 17 · barbearia cheia (3/3), foi embora  (T22)
+[00:04.222] Cliente 20 · chegou na barbearia  (T25)
+[00:04.222] Cliente 20 · barbearia cheia (3/3), foi embora  (T25)
+[00:04.368] Cliente 16 · chegou na barbearia  (T21)
+[00:04.368] Cliente 16 · barbearia cheia (3/3), foi embora  (T21)
+[00:05.167] Cliente 19 · chegou na barbearia  (T24)
+[00:05.167] Cliente 19 · barbearia cheia (3/3), foi embora  (T24)
+[00:06.767] Cliente 18 · chegou na barbearia  (T23)
+[00:06.767] Cliente 18 · barbearia cheia (3/3), foi embora  (T23)
+[00:15.005] Cliente 01 · ainda esperando quando o prazo acabou (ninguém o chamou)  (T6)
+[00:15.005] Cliente 02 · ainda esperando quando o prazo acabou (ninguém o chamou)  (T7)
+[00:15.005] Barbeiro   · encerrou o expediente  (T5)
+[00:15.005] Cliente 04 · ainda esperando quando o prazo acabou (ninguém o chamou)  (T9)
+
+===== RELATÓRIO · Barbeiro Dorminhoco =====
+Solução: INGÊNUA 2 (lock + flag de sono: lost wakeup)
+Clientes: 20 | Cadeiras de espera: 3 | Barbeiros: 1
+Clientes atendidos ............... 0
+Clientes que desistiram .......... 17
+Clientes sem desfecho (presos) ... 3
+Maior nº esperando ............... 3
+Maior nº de cortes juntos ........ 0
+Giros de espera ocupada .......... 0
+CPU gasta ........................ 0.1 s em 15.0 s (1 % de um núcleo)
+[ERRO] atendidos + desistentes = total de clientes
+[OK]   nunca mais de 3 clientes esperando
+[OK]   um corte por vez
+[OK]   barbeiro nunca ficou em espera ocupada
+[ERRO] a simulação não terminou sozinha (travou até o prazo de 15 s)
+Tempo total: 15.0 s
