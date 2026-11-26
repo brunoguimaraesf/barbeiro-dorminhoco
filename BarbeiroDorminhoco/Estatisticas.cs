@@ -12,12 +12,17 @@ public sealed class Estatisticas
     private int _cortesAtivos;
     private int _maxCortesSimultaneos;
     private int _maxEsperando;
+    private long _girosEspera;
 
     public int Atendidos => Volatile.Read(ref _atendidos);
     public int Desistentes => Volatile.Read(ref _desistentes);
     public int Concluidos => Atendidos + Desistentes;
     public int MaxCortesSimultaneos => Volatile.Read(ref _maxCortesSimultaneos);
     public int MaxEsperando => Volatile.Read(ref _maxEsperando);
+    public long GirosEspera => Interlocked.Read(ref _girosEspera);
+
+    /// <summary>Quantas voltas o barbeiro deu num laço de espera sem bloquear (espera ocupada).</summary>
+    public void RegistrarGiros(long giros) => Interlocked.Add(ref _girosEspera, giros);
 
     public void Atendeu() => Interlocked.Increment(ref _atendidos);
     public void Desistiu() => Interlocked.Increment(ref _desistentes);
